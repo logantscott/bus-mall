@@ -75,9 +75,9 @@ const products = [
         image: '../assets/bag.jpg'
     },
     {
-        id: 'cthulu',
+        id: 'cthulhu',
         name: 'Angry Evil Green Flying Biped Octopus Doll',
-        image: '../assets/cthulu.jpg'
+        image: '../assets/cthulhu.jpg'
     },
     {
         id: 'unicorn',
