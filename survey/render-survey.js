@@ -4,6 +4,9 @@ export default function renderSurvey(counter) {
 
     let lastSession = [];
 
+    //temp checker _________________________________________________________
+    counter = 1;
+    //temp checker ____________________________________
     if (counter > 0) { 
         lastSession = sessionStorage.getItem('lastSession');
         lastSession = lastSession ? JSON.parse(lastSession) : lastSession = [];
@@ -13,9 +16,11 @@ export default function renderSurvey(counter) {
 
     // make empty array called lastProducts, loop through lastSession array (array of 3 ids) and get their index in the product seed, store to lastProducts
     let lastProducts = [];
-    lastSession.forEach(displayedProduct => {
-        lastProducts.push(products.indexOf(product => product.id === displayedProduct[i]));
-    })
+    lastSession.forEach((displayedProduct) => {
+        products.forEach((product, i) => { 
+            if (product.id === displayedProduct) { lastProducts.push(i); }
+        });
+    });
 
     // generate a random int per length of products array, if number exists in lastProducts[] or already in new uniqueRandomArray[], keep looping until the new uniqueRandomArray[] has 3 numbers (stored as index of products)
     let uniqueRandom;
@@ -31,6 +36,10 @@ export default function renderSurvey(counter) {
 
     // console.log('arraytest');
     // console.log(uniqueRandomArray);
+
+    let productsToDisplay = [];
+    // productsToDisplay.push('test');
+    // console.log(productsToDisplay);
 
     uniqueRandomArray.forEach(productIndex => {
         const container = document.getElementById('surveyContainer');
@@ -49,6 +58,10 @@ export default function renderSurvey(counter) {
         label.appendChild(image);
         label.appendChild(span);
         container.appendChild(label);
+
+        productsToDisplay.push(products[productIndex].id);
     });
+
+    sessionStorage.setItem('lastSession', JSON.stringify(productsToDisplay));
 
 }
