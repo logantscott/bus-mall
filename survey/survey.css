@@ -1,0 +1,16 @@
+label img {
+    width: 250px;
+    border: 1px solid #666;
+}
+
+label {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 250px;
+}
+
+#surveyContainer {
+    display: flex;
+    justify-content: space-between;
+}
