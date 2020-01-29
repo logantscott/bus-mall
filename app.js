@@ -27,3 +27,11 @@
 //session of 25 can use a separate var for keeping track... maybe even in sessionStorage
 //maybe use sessionStorage for it's own list of <=25 selections
 //click session just gets recorded to total sessions (.push(), .setItem())
+
+//sessionstorage:
+//session id
+//last session
+//total session (up to 25)
+
+//localstorage:
+//totalsessions

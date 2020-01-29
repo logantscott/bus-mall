@@ -1,7 +1,8 @@
 import renderSurvey from './render-survey.js';
+import { getCounter } from '../common/utils.js';
 
 let sessionId = sessionStorage.getItem('sessionId');
-let sessionCounter = sessionStorage.getItem('sessionCounter') ? Number(sessionStorage.getItem('sessionCounter')) : 0;
+let sessionCounter = getCounter();
 
 // sessionStorage.setItem('sessionCounter', sessionCounter); does this need to happen here?
 
@@ -19,7 +20,7 @@ function newSession() {
     return newSessionId;
 }
 
-console.log(sessionId + ' : ' + sessionCounter);
+// console.log(sessionId + ' : ' + sessionCounter);
 
 
-renderSurvey(sessionCounter);
+renderSurvey();
