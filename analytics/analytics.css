@@ -6,6 +6,26 @@ td, th {
 th {
     font-weight: bold;
     text-align: center;
+    cursor: pointer;
+    background: #ddd;
+}
+
+tfoot tr td {
+    font-weight: bold;
+    background: #ddd;
+}
+
+th:hover {
+    background: #bbb;
+}
+
+th:active {
+    background: #fff;
+}
+
+th:after {
+    content: " \2191 \2193";
+    font-size: .8em;
 }
 
 td {
