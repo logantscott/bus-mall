@@ -1,0 +1,17 @@
+td, th {
+    border: 1px solid black;
+    margin: 0;
+}
+
+th {
+    font-weight: bold;
+    text-align: center;
+}
+
+td {
+    padding-right: 6px;
+}
+
+tr:nth-child(n+1) {
+    text-align: right;
+}
