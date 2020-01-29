@@ -6,17 +6,17 @@ const products = [
     },
     {
         id: 'pen',
-        name: 'Flimsy Pen Untensil Topper',
+        name: 'Flimsy Utensil Pen Topper',
         image: '../assets/pen.jpg'
     },
     {
         id: 'breakfast',
-        name: 'Ultimate Breakfast Machine All-In-One Deluxe 3000',
+        name: 'Ultimate All-In-One Breakfast Machine Deluxe 3000',
         image: '../assets/breakfast.jpg'
     },
     {
         id: 'dog-duck',
-        name: 'Dog Duck-Call - Quack!',
+        name: 'Duck-Call for Dogs - Quack!',
         image: '../assets/dog-duck.jpg'
     },
     {
@@ -26,7 +26,7 @@ const products = [
     },
     {
         id: 'wine-glass',
-        name: 'Wine Peeker',
+        name: 'Sommelier Wine Peeker',
         image: '../assets/wine-glass.jpg'
     },
     {
@@ -36,22 +36,22 @@ const products = [
     },
     {
         id: 'bubblegum',
-        name: 'Meatball Bubble Gum?',
+        name: 'Meatball? Bubble Gum',
         image: '../assets/bubblegum.jpg'
     },
     {
         id: 'usb',
-        name: 'Portable USB 10" Tentacle w/ Wiggle Action',
+        name: 'Portable USB-Powered 10" Tentacle w/ Wiggle Action',
         image: '../assets/usb.jpg'
     },
     {
         id: 'pet-sweep',
-        name: 'Pet Torture Device',
+        name: 'Happy Pet Torture Device',
         image: '../assets/pet-sweep.jpg'
     },
     {
         id: 'bathroom',
-        name: 'Bathroom Reader - Now with TP!',
+        name: 'Bathroom Reader - Now with TP Holder!',
         image: '../assets/bathroom.jpg'
     },
     {
@@ -81,7 +81,7 @@ const products = [
     },
     {
         id: 'unicorn',
-        name: '100% Pasteurized Unicorn Meat - No Added Sugar',
+        name: '100% Pasteurized Unicorn Meat - No Added Magic (GF)',
         image: '../assets/unicorn.jpg'
     },
     {
@@ -91,12 +91,12 @@ const products = [
     },
     {
         id: 'chair',
-        name: 'Chair',
+        name: 'Chair.',
         image: '../assets/chair.jpg'
     },
     {
         id: 'banana',
-        name: 'Cylindrical Discer - Perfect Discs Every Time!',
+        name: 'Kitchen Cylindrical Discer - Perfect Discs Every Time!',
         image: '../assets/banana.jpg'
     }
 ];

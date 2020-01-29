@@ -12,11 +12,14 @@ label img {
     width: 250px;
     border: 1px solid #666;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 8px;
+    transition: .1s;
 }
 
 label span {
-    
+    transition: .2s;
+    display: inline-block;
+    color: #444;
 }
 
 #surveyContainer {
@@ -25,11 +28,15 @@ label span {
 }
 
 label img:hover, input[type="radio"]:checked+img {
-    box-shadow: 0 0 4px 2px #666;
+    box-shadow: 0 0 3px 1px #000;
+}
+
+input[type="radio"]:checked+img+span {
+    color: black;
 }
 
 label img:active {
-    box-shadow: 0 0 4px 2px #000;
+    box-shadow: 0 0 0px 0px #333;
 }
 
 form {
@@ -46,6 +53,5 @@ button {
 #surveyContainer {
     width: 900px;
     height: 270px;
-    overflow: auto;
     clear: both;
 }

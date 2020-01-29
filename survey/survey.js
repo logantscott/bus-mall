@@ -5,14 +5,7 @@ const form = document.getElementById('surveyForm');
 // const container = document.getElementById('surveyContainer');
 
 let sessionId = sessionStorage.getItem('sessionId');
-
-// sessionStorage.setItem('sessionCounter', sessionCounter); does this need to happen here?
-
-if (sessionId) {
-    sessionId = JSON.parse(sessionId);
-} else {
-    sessionId = newSession();
-}
+sessionId = sessionId ? JSON.parse(sessionId) : newSession() ;
 
 renderSurvey();
 
@@ -20,7 +13,6 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
     
     let counter = getCounter(); //do i need this?
-
     let selected = document.querySelector('input[name="surveyOptions"]:checked').id;
 
     const displayedIds = getDisplayedIds();
@@ -36,6 +28,7 @@ form.addEventListener('submit', (e) => {
         if (confirm('start over?')) {
             newSession();
         }
+    }
 
     reloadSurvey();
 
@@ -58,11 +51,11 @@ function updateAllSessions(displayedProductIds, selectedProduct, sessionId) {
 }
 
 function getAllSessions() {
-    return localStorage.getItem('allSessions')? JSON.parse(localStorage.getItem('allSessions')) : [] ;
+    return localStorage.getItem('allSessions') ? JSON.parse(localStorage.getItem('allSessions')) : [] ;
 }
 
 function getDisplayedIds() {
-    const inputs = document.getElementsByTagName('input')
+    const inputs = document.getElementsByTagName('input');
     let displayedProductIds = [];
 
     for (let i = 0; i < inputs.length; i++) {

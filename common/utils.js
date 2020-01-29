@@ -27,6 +27,8 @@ export function generateUniqueArray(lastSessionIndexes) {
         uniqueRandom = Math.floor(Math.random() * products.length);
         if (!uniqueRandomArray.includes(uniqueRandom) && !lastSessionIndexes.includes(uniqueRandom)) {
             uniqueRandomArray.push(uniqueRandom);
+        } else if (lastSessionIndexes.includes(uniqueRandom)) {
+            // console.log(products[uniqueRandom].name); // for checking that something happens on match lastSessionIndexes
         }
     } while (uniqueRandomArray.length < 3);
     return uniqueRandomArray;

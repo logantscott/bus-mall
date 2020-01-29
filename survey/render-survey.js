@@ -8,10 +8,10 @@ export default function renderSurvey() {
     // let counter = getCounter();
     let lastSessionIndexes = getLastSession();
     let uniqueRandomArray = generateUniqueArray(lastSessionIndexes);
-    let displayedProductIds = []; // initialize before uniqueRandomArray.forEach
 
     // uniqueRandomArray contains 3 unique indexes of product, loop through and display them
     uniqueRandomArray.forEach(uniqueIndex => {
+
         const label = document.createElement('label'); //child container
         const input = document.createElement('input'); //radio input
         const image = document.createElement('img'); //product image
@@ -27,10 +27,7 @@ export default function renderSurvey() {
         label.appendChild(image);
         label.appendChild(span);
         container.appendChild(label);
-
-        // convert index to id for storing, mainly good practice if array changed, will find same id, not index
-        displayedProductIds.push(products[uniqueIndex].id);
-
+        
     }); // end uniqueRandomArray.forEach
 
     const button = document.createElement('button');
