@@ -4,6 +4,7 @@ export function newSession() {
     const newSessionId = Date.now();
     sessionStorage.setItem('sessionId', newSessionId);
     sessionStorage.setItem('sessionCounter', 0);
+    localStorage.removeItem('userSession');
     return newSessionId;
 }
 

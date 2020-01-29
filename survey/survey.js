@@ -6,33 +6,29 @@ const form = document.getElementById('surveyForm');
 
 let sessionId = sessionStorage.getItem('sessionId');
 sessionId = sessionId ? JSON.parse(sessionId) : newSession() ;
+let counter = getCounter();
 
-renderSurvey();
+(counter >= 25) ? window.location.href = '../survey/complete/' : renderSurvey();
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    let counter = getCounter(); //do i need this?
+    counter = getCounter(); //do i need this?
     let selected = document.querySelector('input[name="surveyOptions"]:checked').id;
 
     const displayedIds = getDisplayedIds();
     setLastSessionIds(displayedIds);
 
     updateAllSessions(displayedIds, selected, sessionId);
+    updateUserSession(displayedIds, selected, sessionId);
 
     counter++;
     setSessionCounter(counter);
     
     //PLACEHOLDER for doing stuff when you're done
     if (counter >= 25) {
-        newSession();
-        // Temp Confirm to control flow, normally should force to analytics
-        if (confirm('start over?')) {
-            reloadSurvey();
-        } else {
-            window.location.href = '../analytics/';
-            return false;
-        }
+        window.location.href = '../survey/complete/';
+        return false;
     }
 
     reloadSurvey();
@@ -53,6 +49,18 @@ function updateAllSessions(displayedProductIds, selectedProduct, sessionId) {
 
     allSessions.push(session);
     localStorage.setItem('allSessions', JSON.stringify(allSessions));
+}
+
+function updateUserSession(displayedProductIds, selectedProduct, sessionId) {
+    const userSession = getUserSession();
+    const session = new Session(displayedProductIds, selectedProduct, sessionId);
+
+    userSession.push(session);
+    localStorage.setItem('userSession', JSON.stringify(userSession));
+}
+
+function getUserSession() {
+    return localStorage.getItem('userSession') ? JSON.parse(localStorage.getItem('userSession')) : [] ;
 }
 
 function getAllSessions() {
