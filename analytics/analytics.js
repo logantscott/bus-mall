@@ -17,7 +17,7 @@ allSessions.forEach(session => {
     surveyResults[session.selectedId].clicks = surveyResults[session.selectedId].clicks ? surveyResults[session.selectedId].clicks + 1 : 1;
 });
 
-// console.log(surveyResults);
+console.log(surveyResults);
 
 renderAnalyticsTable();
 
@@ -30,7 +30,7 @@ function renderAnalyticsTable(sortResults = Object.keys(surveyResults)) {
 
     const tableHeader = document.createElement('thead');
     const tableHeaderRow = document.createElement('tr');
-    const headers = ['Products', 'Impressions', 'Clicks', 'Percentage'];
+    const headers = ['Products', 'Impressions', 'Clicks', 'Click Rate'];
 
     headers.forEach(header => {
         const th = document.createElement('th');
@@ -95,7 +95,7 @@ function sortAnalytics(header) {
         sortResults = headerSorts[header].sort < 0
             ? Object.keys(surveyResults).sort(function(a, b){return surveyResults[a][header] - surveyResults[b][header];})
             : Object.keys(surveyResults).sort(function(a, b){return surveyResults[b][header] - surveyResults[a][header];});
-    } else if (header === 'percentage') {
+    } else if (header === 'click rate') {
         sortResults = headerSorts[header].sort < 0
             ? Object.keys(surveyResults).sort(function(a, b){return (surveyResults[a]['clicks'] / surveyResults[a]['impressions']) - (surveyResults[b]['clicks'] / surveyResults[b]['impressions']);})
             : Object.keys(surveyResults).sort(function(a, b){return (surveyResults[b]['clicks'] / surveyResults[b]['impressions']) - (surveyResults[a]['clicks'] / surveyResults[a]['impressions']);}); 
@@ -129,4 +129,129 @@ function getPercentage() {
     let percentage;
     percentage = (sumClicks() * 100 / sumImpressions()).toFixed(0) + '%';
     return percentage;
+}
+
+
+//CHART
+const ctx1 = document.getElementById('chart1').getContext('2d');
+const ctx2 = document.getElementById('chart2').getContext('2d');
+
+let dataImpressions = [];
+let dataClicks = [];
+let dataPercentage = [];
+let labels = [];
+
+Object.keys(surveyResults).forEach(key => {
+    let impression = surveyResults[key].impressions ? surveyResults[key].impressions : 0;
+    let click = surveyResults[key].clicks ? surveyResults[key].clicks : 0;
+    let percentage = (click * 100 / impression).toFixed(0);
+    dataImpressions.push(impression);
+    dataClicks.push(click);
+    dataPercentage.push(percentage);
+
+    labels.push(key);
+});
+
+const setColors = function(red, green, blue, sort) {
+    let colorArray = [];
+    for (let i = 0; i < Object.keys(surveyResults).length; i++) {
+        let divInt = Math.floor((755 - 455) / Object.keys(surveyResults).length);
+
+        const arrColor = ((i * divInt) + divInt);
+
+        const b = blue > 0 ? 255 : Math.floor(arrColor / 2);
+        const r = red > 0 ? 255 : Math.floor(arrColor / 2);
+        const g = green > 0 ? 255 : Math.floor(arrColor / 2);
+
+        sort > 0 ? colorArray.push('rgb(' + r + ',' + g + ',' + b + ')') : colorArray.unshift('rgb(' + r + ',' + g + ',' + b + ')');
+        // colorArray.push(dynamicColors());
+    }
+    
+    return colorArray;
+};
+
+// function dynamicColors() {
+//     var r = Math.floor(Math.random() * 255);
+//     var g = Math.floor(Math.random() * 255);
+//     var b = Math.floor(Math.random() * 255);
+//     return 'rgb(' + r + ',' + g + ',' + b + ')';
+// }
+
+// const colorArray2 = [...colorArray].sort().reverse();
+
+// eslint-disable-next-line no-unused-vars
+const myChart1 = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: '# of Clicks',
+            data: dataClicks,
+            backgroundColor: setColors(0, 1, 0, 1)
+        }, {
+            label: '# of Impressions',
+            data: dataImpressions,
+            backgroundColor: setColors(0, 0, 1)
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                stacked: true,
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            yAxes: [{
+                stacked: true,
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+// eslint-disable-next-line no-unused-vars
+const myChart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Click-Through Rate %',
+            data: dataPercentage,
+            backgroundColor: setColors(1, 0, 0)
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    max: 100
+                }
+            }]
+        }
+    }
+});
+
+document.getElementById('analyticsTable').classList.add('hide');
+document.getElementById('chart2').classList.add('hide');
+document.getElementById('chart1Button').classList.add('selected');
+
+const analyticsButtons = document.querySelectorAll('span.button');
+
+for (let i = 0; i < analyticsButtons.length; i++) {
+    analyticsButtons[i].addEventListener('click', () => {
+        // console.log(analyticsButtons[i].id.replace('Button', ''));
+        console.log(analyticsButtons[i].id.replace('Button', ''));
+        document.getElementById('analyticsTable').classList.add('hide');
+        document.getElementById('chart1').classList.add('hide');
+        document.getElementById('chart2').classList.add('hide');
+        document.getElementById('analyticsTableButton').classList.remove('selected');
+        document.getElementById('chart1Button').classList.remove('selected');
+        document.getElementById('chart2Button').classList.remove('selected');
+        document.getElementById(analyticsButtons[i].id.replace('Button', '')).classList.remove('hide');
+        document.getElementById(analyticsButtons[i].id).classList.add('selected');
+    });
 }

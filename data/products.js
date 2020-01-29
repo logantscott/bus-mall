@@ -42,7 +42,7 @@ const products = [
     {
         id: 'usb',
         name: 'Portable USB-Powered 10" Tentacle w/ Wiggle Action',
-        image: '../assets/usb.jpg'
+        image: '../assets/usb.gif'
     },
     {
         id: 'pet-sweep',

@@ -19,9 +19,17 @@
         </nav>
     </header>
     <h1>Bus Mall Analytics lol</h1>
-    <div id="analyticsContainer">
-
+    <div id="analyticsNav">
+        <span class="button" id="analyticsTableButton">Table</span>
+        <span class="button" id="chart1Button">Clicks/Impressions Chart</span>
+        <span class="button" id="chart2Button">Click-Through Rate Chart</span>
     </div>
+    <div id="analyticsContainer">
+        <canvas id="chart1"></canvas>
+        <canvas id="chart2"></canvas>
+    </div>
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script type="module" src="analytics.js"></script>
 </body>
 
