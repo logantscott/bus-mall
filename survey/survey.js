@@ -25,8 +25,13 @@ form.addEventListener('submit', (e) => {
     
     //PLACEHOLDER for doing stuff when you're done
     if (counter >= 25) {
+        newSession();
+        // Temp Confirm to control flow, normally should force to analytics
         if (confirm('start over?')) {
-            newSession();
+            reloadSurvey();
+        } else {
+            window.location.href = '../analytics/';
+            return false;
         }
     }
 

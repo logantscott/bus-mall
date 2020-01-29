@@ -25,7 +25,9 @@ th:active {
 
 th:after {
     content: " \2191 \2193";
-    font-size: .8em;
+    font-size: .7em;
+    position: relative;
+    top: -2px;
 }
 
 td {
