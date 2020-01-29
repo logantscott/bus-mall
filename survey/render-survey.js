@@ -1,13 +1,14 @@
 import products from '../data/products.js';
-import { getCounter, clearSurvey, generateUniqueArray, getLastSession } from '../common/utils.js';
+import { generateUniqueArray, getLastSession } from '../common/utils.js';
 
 export default function renderSurvey() {
+    const form = document.getElementById('surveyForm');
     const container = document.getElementById('surveyContainer');
 
     // let counter = getCounter();
     let lastSessionIndexes = getLastSession();
     let uniqueRandomArray = generateUniqueArray(lastSessionIndexes);
-    let productsToDisplay = []; // initialize before uniqueRandomArray.forEach
+    let displayedProductIds = []; // initialize before uniqueRandomArray.forEach
 
     // uniqueRandomArray contains 3 unique indexes of product, loop through and display them
     uniqueRandomArray.forEach(uniqueIndex => {
@@ -18,6 +19,7 @@ export default function renderSurvey() {
 
         input.type = 'radio';
         input.name = 'surveyOptions';
+        input.id = products[uniqueIndex].id;
         image.src = products[uniqueIndex].image;
         span.textContent = products[uniqueIndex].name;
 
@@ -26,41 +28,14 @@ export default function renderSurvey() {
         label.appendChild(span);
         container.appendChild(label);
 
-        // EVENT LISTENER
-        label.addEventListener('click', (e) => {
-            e.preventDefault(); //prevent dupes mainly
-
-            let counter = getCounter(); //do i need this?
-            
-            //if25
-            //store user session up to 25
-            //store total sessions
-            //get current usersessions
-            //get current totalsessions
-
-            // store last 3 items displayed *after* click from productsToDisplay[] (array of 3 product ids)
-            sessionStorage.setItem('lastSessionIds', JSON.stringify(productsToDisplay));
-
-            // update counter - up to 25
-            counter++;
-
-            clearSurvey();
-
-            // PLACEHOLDER for doing stuff when you're done
-            if (counter >= 25) {
-                if (confirm('start over?')) { 
-                    sessionStorage.setItem('sessionCounter', JSON.stringify(0));
-                    renderSurvey();
-                }
-            } else {
-                sessionStorage.setItem('sessionCounter', JSON.stringify(counter));
-                renderSurvey();
-            }
-
-        }); // end EVENT LISTENER
-
         // convert index to id for storing, mainly good practice if array changed, will find same id, not index
-        productsToDisplay.push(products[uniqueIndex].id);
+        displayedProductIds.push(products[uniqueIndex].id);
 
     }); // end uniqueRandomArray.forEach
+
+    const button = document.createElement('button');
+    button.textContent = 'Submit';
+
+    form.appendChild(button);
+
 }// end renderSurvey function

@@ -1,5 +1,12 @@
 import products from '../data/products.js';
 
+export function newSession() {
+    const newSessionId = Date.now();
+    sessionStorage.setItem('sessionId', newSessionId);
+    sessionStorage.setItem('sessionCounter', 0);
+    return newSessionId;
+}
+
 export function getLastSessionIds() {
     return (sessionStorage.getItem('lastSessionIds')) ? JSON.parse(sessionStorage.getItem('lastSessionIds')) : [] ;
 }
@@ -8,11 +15,8 @@ export function getCounter() {
     return Number(sessionStorage.getItem('sessionCounter')) >= 0 ? Number(sessionStorage.getItem('sessionCounter')) : 0;
 }
 
-export function clearSurvey() {
-    const container = document.getElementById('surveyContainer');
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
+export function reloadSurvey() {
+    window.location.href = '../survey/';
 }
 
 export function generateUniqueArray(lastSessionIndexes) {
@@ -40,4 +44,14 @@ export function getLastSession() {
         });
     });
     return lastSessionIndexes;
+}
+
+export function setLastSessionIds(displayedProductIds) {
+    // store last 3 items displayed *after* click from productsToDisplay[] (array of 3 product ids)
+    sessionStorage.setItem('lastSessionIds', JSON.stringify(displayedProductIds));
+}
+
+export function setSessionCounter(counter) {
+    // update counter - up to 25
+    sessionStorage.setItem('sessionCounter', JSON.stringify(counter));
 }

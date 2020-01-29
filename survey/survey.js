@@ -1,8 +1,10 @@
 import renderSurvey from './render-survey.js';
-import { getCounter } from '../common/utils.js';
+import { getCounter, reloadSurvey, newSession, setSessionCounter, setLastSessionIds } from '../common/utils.js';
+
+const form = document.getElementById('surveyForm');
+// const container = document.getElementById('surveyContainer');
 
 let sessionId = sessionStorage.getItem('sessionId');
-let sessionCounter = getCounter();
 
 // sessionStorage.setItem('sessionCounter', sessionCounter); does this need to happen here?
 
@@ -12,15 +14,59 @@ if (sessionId) {
     sessionId = newSession();
 }
 
-function newSession() {
-    const newSessionId = Date.now();
-    sessionCounter = 0;
-    sessionStorage.setItem('sessionId', newSessionId);
-    sessionStorage.setItem('sessionCounter', 0);
-    return newSessionId;
+renderSurvey();
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    let counter = getCounter(); //do i need this?
+
+    let selected = document.querySelector('input[name="surveyOptions"]:checked').id;
+
+    const displayedIds = getDisplayedIds();
+    setLastSessionIds(displayedIds);
+
+    updateAllSessions(displayedIds, selected, sessionId);
+
+    counter++;
+    setSessionCounter(counter);
+    
+    //PLACEHOLDER for doing stuff when you're done
+    if (counter >= 25) {
+        if (confirm('start over?')) {
+            newSession();
+        }
+
+    reloadSurvey();
+
+}); // end EVENT LISTENER
+
+class Session {
+    constructor(displayedProductIds, selectedProduct, sessionId) {
+        this.productIds = displayedProductIds;
+        this.selectedId = selectedProduct;
+        this.sessionId = sessionId;
+    }
 }
 
-// console.log(sessionId + ' : ' + sessionCounter);
+function updateAllSessions(displayedProductIds, selectedProduct, sessionId) {
+    const allSessions = getAllSessions();
+    const session = new Session(displayedProductIds, selectedProduct, sessionId);
 
+    allSessions.push(session);
+    localStorage.setItem('allSessions', JSON.stringify(allSessions));
+}
 
-renderSurvey();
+function getAllSessions() {
+    return localStorage.getItem('allSessions')? JSON.parse(localStorage.getItem('allSessions')) : [] ;
+}
+
+function getDisplayedIds() {
+    const inputs = document.getElementsByTagName('input')
+    let displayedProductIds = [];
+
+    for (let i = 0; i < inputs.length; i++) {
+        displayedProductIds.push(inputs[i].id);
+    }
+    return displayedProductIds;
+}

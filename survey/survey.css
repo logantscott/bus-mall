@@ -31,3 +31,21 @@ label img:hover, input[type="radio"]:checked+img {
 label img:active {
     box-shadow: 0 0 4px 2px #000;
 }
+
+form {
+    text-align: center;
+}
+
+button {
+    margin: 0 auto;
+    width: 325px;
+    height: 120px;
+    font-size: 48px;
+}
+
+#surveyContainer {
+    width: 900px;
+    height: 270px;
+    overflow: auto;
+    clear: both;
+}
