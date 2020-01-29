@@ -51,7 +51,15 @@ canvas {
     justify-content: center;
 }
 
-span.button {
+span.databutton {
+    display: inline-block;
+    padding: 7px 15px;
+    border: 1px solid #666;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+span.button, span.databutton {
     display: inline-block;
     padding: 7px 15px;
     border: 1px solid #666;
@@ -60,17 +68,33 @@ span.button {
     cursor: pointer;
 }
 
-span.button:hover {
+span.button:hover, span.databutton:hover {
     box-shadow: 0 0 3px 1px #333;
 }
 
-span.button:active {
+span.button:active, span.databutton:active {
     box-shadow: 0 0 0px 0px #666;
 }
 
 span.selected {
-    background: #eee;
     box-shadow: 0 0 3px 1px #333;
+    background: #eee;
+}
+
+#analyticsData {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
+
+#userSession {
+    border-radius: 10px 0 0 10px;
+    margin-right: 0px;
+}
+
+#allSessions {
+    border-radius: 0 10px 10px 0;
+    margin-left: 0px;
 }
 
 #analyticsTable, #chart1, #chart2 {

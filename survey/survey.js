@@ -27,6 +27,8 @@ form.addEventListener('submit', (e) => {
     
     //PLACEHOLDER for doing stuff when you're done
     if (counter >= 25) {
+        localStorage.setItem('userSession', sessionStorage.getItem('userSession'));
+        sessionStorage.removeItem('userSession');
         window.location.href = '../survey/complete/';
         return false;
     }
@@ -56,11 +58,11 @@ function updateUserSession(displayedProductIds, selectedProduct, sessionId) {
     const session = new Session(displayedProductIds, selectedProduct, sessionId);
 
     userSession.push(session);
-    localStorage.setItem('userSession', JSON.stringify(userSession));
+    sessionStorage.setItem('userSession', JSON.stringify(userSession));
 }
 
 function getUserSession() {
-    return localStorage.getItem('userSession') ? JSON.parse(localStorage.getItem('userSession')) : [] ;
+    return sessionStorage.getItem('userSession') ? JSON.parse(sessionStorage.getItem('userSession')) : [] ;
 }
 
 function getAllSessions() {

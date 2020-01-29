@@ -1,10 +1,34 @@
 import products from '../data/products.js';
 
+export function viewAnalytics() {
+    const currentDataset = localStorage.getItem('currentDataset') ? JSON.parse(localStorage.getItem('currentDataset')) : 'allSessions';
+    const sessionsView = localStorage.getItem(currentDataset) ? JSON.parse(localStorage.getItem(currentDataset)) : [];
+
+    // example object:
+    // wine-glass: {
+        // impressions: 16,
+        // clicks: 3
+    // },
+
+    let surveyResults = {};
+
+    sessionsView.forEach(session => {
+        session.productIds.forEach(productId => {
+            if (!surveyResults[productId]) surveyResults[productId] = {};
+            surveyResults[productId].impressions = surveyResults[productId].impressions ? surveyResults[productId].impressions + 1 : 1;
+        });
+        if (!surveyResults[session.selectedId]) surveyResults[session.selectedId] = {};
+        surveyResults[session.selectedId].clicks = surveyResults[session.selectedId].clicks ? surveyResults[session.selectedId].clicks + 1 : 1;
+    });
+
+    return surveyResults;
+    // console.log(surveyResults);
+}
+
 export function newSession() {
     const newSessionId = Date.now();
     sessionStorage.setItem('sessionId', newSessionId);
     sessionStorage.setItem('sessionCounter', 0);
-    localStorage.removeItem('userSession');
     return newSessionId;
 }
 

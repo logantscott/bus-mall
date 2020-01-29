@@ -1,4 +1,4 @@
-import { newSession } from '../../common/utils.js';
+import { newSession, viewAnalytics } from '../../common/utils.js';
 
 const newSurvey = document.getElementById('newSurvey');
 const lastResults = document.getElementById('lastResults');
@@ -11,5 +11,6 @@ newSurvey.addEventListener('click', (e) => {
 });
 
 lastResults.addEventListener('click', () => {
-
-})
+    localStorage.setItem('currentDataset', JSON.stringify('userSession'));
+    window.location.href = '../../analytics/';
+});

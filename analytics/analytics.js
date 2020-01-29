@@ -1,23 +1,10 @@
-const allSessions = JSON.parse(localStorage.getItem('allSessions'));
+import { viewAnalytics } from '../common/utils.js';
 
-// example object:
-// wine-glass: {
-    // impressions: 16,
-    // clicks: 3
-// },
+const surveyResults = viewAnalytics();
+const currentDataset = localStorage.getItem('currentDataset') ? JSON.parse(localStorage.getItem('currentDataset')) : 'allSessions';
+const currentView = localStorage.getItem('currentView') ? JSON.parse(localStorage.getItem('currentView')) : 'chart1';
 
-let surveyResults = {};
-
-allSessions.forEach(session => {
-    session.productIds.forEach(productId => {
-        if (!surveyResults[productId]) surveyResults[productId] = {};
-        surveyResults[productId].impressions = surveyResults[productId].impressions ? surveyResults[productId].impressions + 1 : 1;
-    });
-    if (!surveyResults[session.selectedId]) surveyResults[session.selectedId] = {};
-    surveyResults[session.selectedId].clicks = surveyResults[session.selectedId].clicks ? surveyResults[session.selectedId].clicks + 1 : 1;
-});
-
-console.log(surveyResults);
+document.getElementById(currentDataset).classList.add('selected');
 
 renderAnalyticsTable();
 
@@ -112,7 +99,7 @@ function sortAnalytics(header) {
 function sumImpressions() {
     let total = 0;
     Object.keys(surveyResults).forEach(key => {
-        total = total + surveyResults[key].impressions;
+        total = surveyResults[key].impressions ? total + surveyResults[key].impressions : total;
     });
     return total;
 }
@@ -120,7 +107,7 @@ function sumImpressions() {
 function sumClicks() {
     let total = 0;
     Object.keys(surveyResults).forEach(key => {
-        total = total + surveyResults[key].clicks;
+        total = surveyResults[key].clicks ? total + surveyResults[key].clicks : total;
     });
     return total;
 }
@@ -236,15 +223,14 @@ const myChart2 = new Chart(ctx2, {
 });
 
 document.getElementById('analyticsTable').classList.add('hide');
+document.getElementById('chart1').classList.add('hide');
 document.getElementById('chart2').classList.add('hide');
-document.getElementById('chart1Button').classList.add('selected');
+document.getElementById(currentView).classList.remove('hide');
 
 const analyticsButtons = document.querySelectorAll('span.button');
 
 for (let i = 0; i < analyticsButtons.length; i++) {
     analyticsButtons[i].addEventListener('click', () => {
-        // console.log(analyticsButtons[i].id.replace('Button', ''));
-        console.log(analyticsButtons[i].id.replace('Button', ''));
         document.getElementById('analyticsTable').classList.add('hide');
         document.getElementById('chart1').classList.add('hide');
         document.getElementById('chart2').classList.add('hide');
@@ -253,5 +239,19 @@ for (let i = 0; i < analyticsButtons.length; i++) {
         document.getElementById('chart2Button').classList.remove('selected');
         document.getElementById(analyticsButtons[i].id.replace('Button', '')).classList.remove('hide');
         document.getElementById(analyticsButtons[i].id).classList.add('selected');
+
+        localStorage.setItem('currentView', JSON.stringify(analyticsButtons[i].id.replace('Button', '')));
+    });
+}
+
+const dataButtons = document.querySelectorAll('span.databutton');
+
+for (let i = 0; i < dataButtons.length; i++) {
+    dataButtons[i].addEventListener('click', () => {
+        document.getElementById('userSession').classList.remove('selected');
+        document.getElementById('allSessions').classList.remove('selected');
+        document.getElementById(dataButtons[i].id).classList.add('selected');
+        localStorage.setItem('currentDataset', JSON.stringify(dataButtons[i].id));
+        window.location.href = './';
     });
 }
