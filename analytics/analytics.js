@@ -83,11 +83,11 @@ function sortAnalytics(header) {
     if (header === 'impressions' || header === 'clicks') {
         sortResults = headerSorts[header].sort < 0
             ? Object.keys(surveyResults).sort(function(a, b){return surveyResults[a][header] - surveyResults[b][header];})
-            : Object.keys(surveyResults).sort(function(a, b){return surveyResults[b][header] - surveyResults[a][header];});
+            : Object.keys(surveyResults).sort(function(a, b){return surveyResults[a][header] - surveyResults[b][header];}).reverse();
     } else if (header === 'click rate') {
         sortResults = headerSorts[header].sort < 0
             ? Object.keys(surveyResults).sort(function(a, b){return (surveyResults[a]['clicks'] / surveyResults[a]['impressions']) - (surveyResults[b]['clicks'] / surveyResults[b]['impressions']);})
-            : Object.keys(surveyResults).sort(function(a, b){return (surveyResults[b]['clicks'] / surveyResults[b]['impressions']) - (surveyResults[a]['clicks'] / surveyResults[a]['impressions']);}); 
+            : Object.keys(surveyResults).sort(function(a, b){return (surveyResults[a]['clicks'] / surveyResults[a]['impressions']) - (surveyResults[b]['clicks'] / surveyResults[b]['impressions']);}).reverse(); 
     } else {
         sortResults = headerSorts[header].sort > 0
             ? Object.keys(surveyResults).sort()
@@ -95,6 +95,14 @@ function sortAnalytics(header) {
     }
 
     renderAnalyticsTable(sortResults);
+    prepareChartData(sortResults);
+    myChart1.data.datasets[0].data = dataClicks;
+    myChart1.data.datasets[1].data = dataImpressions;
+    myChart1.data.labels = labels;
+    myChart2.data.datasets[0].data = dataPercentage;
+    myChart2.data.labels = labels;
+    myChart1.update();
+    myChart2.update();
     // }
 }
 
@@ -125,21 +133,32 @@ function getPercentage() {
 const ctx1 = document.getElementById('chart1').getContext('2d');
 const ctx2 = document.getElementById('chart2').getContext('2d');
 
-let dataImpressions = [];
-let dataClicks = [];
-let dataPercentage = [];
-let labels = [];
+let dataImpressions;
+let dataClicks;
+let dataPercentage;
+let labels;
 
-Object.keys(surveyResults).forEach(key => {
-    let impression = surveyResults[key].impressions ? surveyResults[key].impressions : 0;
-    let click = surveyResults[key].clicks ? surveyResults[key].clicks : 0;
-    let percentage = (click * 100 / impression).toFixed(0);
-    dataImpressions.push(impression);
-    dataClicks.push(click);
-    dataPercentage.push(percentage);
+function prepareChartData(sortResults = Object.keys(surveyResults)) {
+    dataImpressions = [];
+    dataClicks = [];
+    dataPercentage = [];
+    labels = [];
 
-    labels.push(key);
-});
+    sortResults.forEach(key => {
+        let impression = surveyResults[key].impressions ? surveyResults[key].impressions : 0;
+        let click = surveyResults[key].clicks ? surveyResults[key].clicks : 0;
+        let percentage = (click * 100 / impression).toFixed(0);
+        dataImpressions.push(impression);
+        dataClicks.push(click);
+        dataPercentage.push(percentage);
+
+        labels.push(key);
+        
+    });
+    // console.log(labels);
+}
+
+prepareChartData();
 
 const setColors = function(red, green, blue, sort) {
     let colorArray = [];
