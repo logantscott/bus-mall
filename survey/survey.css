@@ -1,0 +1,57 @@
+label {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 250px;
+}
+label input {
+    display: none;
+}
+
+label img {
+    width: 250px;
+    border: 1px solid #666;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: .1s all;
+}
+
+label span {
+    transition: .2s;
+    display: inline-block;
+    color: #444;
+}
+
+#surveyContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+label img:hover, input[type="radio"]:checked+img {
+    box-shadow: 0 0 3px 1px #000;
+}
+
+input[type="radio"]:checked+img+span {
+    color: black;
+}
+
+label img:active {
+    box-shadow: 0 0 0px 0px #333;
+}
+
+form {
+    text-align: center;
+}
+
+button {
+    margin: 0 auto;
+    width: 325px;
+    height: 120px;
+    font-size: 48px;
+}
+
+#surveyContainer {
+    width: 900px;
+    height: 270px;
+    clear: both;
+}
