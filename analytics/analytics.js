@@ -192,7 +192,7 @@ const myChart1 = new Chart(ctx1, {
                 }
             }],
             yAxes: [{
-                stacked: true,
+                stacked: false,
                 ticks: {
                     beginAtZero:true
                 }
