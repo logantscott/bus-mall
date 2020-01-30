@@ -77,6 +77,8 @@ function sortAnalytics(header) {
     if (!headerSorts[header]) headerSorts[header] = {};
     headerSorts[header].sort = headerSorts[header].sort ? headerSorts[header].sort * -1 : 1;
 
+    // console.log(surveyResults);
+
     document.getElementById('analyticsTable').remove();
     if (header === 'impressions' || header === 'clicks') {
         sortResults = headerSorts[header].sort < 0

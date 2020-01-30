@@ -11,6 +11,7 @@ export function viewAnalytics() {
     // },
 
     let surveyResults = {};
+    
 
     sessionsView.forEach(session => {
         session.productIds.forEach(productId => {
@@ -21,8 +22,14 @@ export function viewAnalytics() {
         surveyResults[session.selectedId].clicks = surveyResults[session.selectedId].clicks ? surveyResults[session.selectedId].clicks + 1 : 1;
     });
 
-    return surveyResults;
+    // check missing and fill 0's if so
+    Object.keys(surveyResults).forEach(key => {
+        surveyResults[key].impressions = surveyResults[key].impressions ? surveyResults[key].impressions : 0;
+        surveyResults[key].clicks = surveyResults[key].clicks ? surveyResults[key].clicks : 0;
+    });
+
     // console.log(surveyResults);
+    return surveyResults;
 }
 
 export function newSession() {
