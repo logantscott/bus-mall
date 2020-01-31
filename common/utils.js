@@ -28,7 +28,7 @@ export function viewAnalytics() {
         surveyResults[key].clicks = surveyResults[key].clicks ? surveyResults[key].clicks : 0;
     });
 
-    // console.log(surveyResults);
+    console.log(surveyResults);
     return surveyResults;
 }
 
