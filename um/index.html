@@ -14,7 +14,6 @@
     }
     
     div#kiva {
-        animation: mymove 10s infinite;
         height: 66px;
         width: 82px;
         margin: 17px 9px;
@@ -26,7 +25,10 @@
         display: inline-block;
         z-index: -1;
         opacity: 1;
-        animation-timing-function: ease-in-out;;
+        animation-timing-function: ease-in-out;
+        animation: mymove 10s infinite;
+        -webkit-animation-name: mymove;
+        -webkit-animation-duration: 10s;
     }
     
     div {
@@ -35,16 +37,45 @@
     
     @keyframes mymove {
       0% {top: 100px; left: 400px; 
-      transform: rotate(90deg);}
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+    }
     
       40% {top: 400px; left: 400px; 
-      transform: rotate(90deg)}
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+    }
     
       60% {top: 400px; left: 400px; 
-      transform: rotate(0deg)}
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+    }
     
       100% {top: 400px; left:-0px; 
-      transform: rotate(0deg)}
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+    }
+    }
+    @-webkit-keyframes mymove {
+      0% {top: 100px; left: 400px; 
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+    }
+    
+      40% {top: 400px; left: 400px; 
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+    }
+    
+      60% {top: 400px; left: 400px; 
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+    }
+    
+      100% {top: 400px; left:-0px; 
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+    }
     }
     </style>
 </head>
